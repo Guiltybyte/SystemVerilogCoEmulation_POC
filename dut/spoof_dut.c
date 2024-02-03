@@ -75,7 +75,6 @@ typedef struct ethernet_frame_from_dut_t {
 int main() {
   int sockfd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
-  // maybe i should the mac addr here too, maybe i dont because it is bound to a socket though
   struct sockaddr_ll sll;
   sll.sll_family = AF_PACKET;
   sll.sll_protocol = htons(ETH_P_ALL);
@@ -109,7 +108,7 @@ int main() {
   unsigned int y;
   ssize_t read_count;
   ssize_t write_count;
-  // static unsigned char buffer[sizeof(ethernet_frame_to_dut_t)];
+
   static ethernet_frame_to_dut_t buffer;
   for(int num_pkts = 0;;num_pkts++) {           // do it forever
     while(1) {
@@ -157,5 +156,3 @@ int main() {
   return 0;
 }
 //---------------------
-
-// read example: https://stackoverflow.com/questions/66089644/how-does-recv-work-in-socket-programming
