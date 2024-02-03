@@ -1,6 +1,5 @@
 // interfaces with the DUT
 `timescale 1ns / 1ns
-`define DPI
 interface example_if;
   localparam CLK_FREQ_MHz = 400;
   localparam CLK_PERIOD   = 1/((CLK_FREQ_MHz * 1e6) * (1e-12));
@@ -96,7 +95,7 @@ interface example_if;
 
     task wait_for_result(output logic[7:0] result);
       @(calc_clkd);
-      result = z;
+      result = z[7:0];
     endtask: wait_for_result
   `endif
 endinterface: example_if

@@ -2,7 +2,7 @@
 `include "DriverStim.svh"
 `include "MonitorCheck.svh"
 
-`define DPI
+//`define DPI
 module tb;
 
   example_if example_if_inst();

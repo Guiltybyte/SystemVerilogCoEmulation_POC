@@ -51,5 +51,48 @@ txn out queue is in turn polled by the system verilog interface.
 
 ![dpi2socketarchitecture](./diagrams/dpi2socket_c_architecture.png)
 
+## REPO structure
+`dut` directory contains the code to spoof a dut on the other end of an ethernet cable
+`testbench` directory contains the testbench and corresponding dpi etc. as well as the
+DUT RTL
+
 ## Build and run
-TODO
+Need a simulator installed, the build scripts assume verilator, which is opensource and available for free.
+However this code should run with any commericial simulator.
+
+### Requirements
+1. At least 2 computers, in my case I used my thinkpad x220 as the testbench host and a raspberry pi as the DUT spoofer
+2. Ethernet cable
+3. Linux OS, the code uses the linux socket api and POSIX threads  (could probably work on any unix like system but I'm not sure)
+4. [Verilator](https://github.com/verilator/verilator)
+
+### Setup
+1. Connect your two computers with an ethernet cable
+2. run `git clone https://github.com/Guiltybyte/SystemVerilogCoEmulation_POC`
+3. copy the `./testbench/` directory to the testbench host machine
+4. copy the `./dut` directory to the other machine (can simply clone the repo onto both machines or use something like scp to copy files over ssh)
+5. On testbench machine:  
+```
+make simulation
+```  
+This runs the simulation test, you should see some simple info on stdout
+
+6. On dut spoof machine:
+```
+cd dut
+gcc *c
+sudo ./a.out
+```
+You should see: "entering read loop" on stdout.
+Leave the program running.
+
+7. 
+```
+make hardware
+```
+This will build and run the hardware version of the testbench, 
+you should see lots of info on stdout, and if you look at the
+terminal on your DUT spoofer machine, you should see that it
+received data from the socket it was polling and sent it back 
+across the cable and that this is what the testbench is reading 
+back and printing to stdout
