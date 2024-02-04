@@ -18,8 +18,6 @@
 // On a linux machine(e.g. raspberry pi), use the command: tcpdump -xx --interface=eth0  (or whatever the name of the ethenet interface is)
 // to see the packet coming in
 
-// TODO: Do circulur array buffer queue implementation (stretch goal)
-
 // Main
 typedef struct txn_in {
   unsigned char x[4]; // equivalent to unsigned int

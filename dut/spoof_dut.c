@@ -22,13 +22,9 @@ unsigned char* uint2uchar(unsigned int x) {
 
   for(int i = size_x - 1; i >= 0; i--) {
     byte = (unsigned char) x;
-    //printf("byte[%d]: %02X\n", i, byte);
     byte_arr[i] = byte;
     x = x >> 8;
-    //printf("x shifted to %08X\n", x);
   }
-  //for(int i = 0; i < size_x; i++)
-  //  printf("byte_arr[%d] %02X\n", i, byte_arr[i]);
   return byte_arr;
 }
 //---------------------
@@ -62,7 +58,7 @@ typedef struct ethernet_frame_to_dut_t {
 
 
 typedef struct ethernet_frame_from_dut_t {  
-  // mandotory ethernet header info
+  // mandatory ethernet header info
   unsigned char dst_mac[6];
   unsigned char src_mac[6];
   unsigned char eth_type[2]; // my custom type is 0x8888
@@ -145,14 +141,13 @@ int main() {
     memcpy(response_buffer.dataZ, uint2uchar(z), sizeof(unsigned int));
 
     write_count = write(
-        sockfd,                         // SOCK ID
+        sockfd,                             // SOCK ID
         (unsigned char *) &response_buffer, // Buffer to send
-        sizeof(response_buffer)                  // length of said buffer
+        sizeof(response_buffer)             // length of said buffer
         );
     printf("Wrote %d packets to socket\n", write_count);
     fflush(stdout);
   }
-
   return 0;
 }
 //---------------------

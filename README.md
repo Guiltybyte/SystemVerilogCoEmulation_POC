@@ -78,6 +78,7 @@ make simulation
 This runs the simulation test, you should see some simple info on stdout
 
 6. On dut spoof machine:
+
 ```
 cd dut
 gcc *c
@@ -96,3 +97,27 @@ terminal on your DUT spoofer machine, you should see that it
 received data from the socket it was polling and sent it back 
 across the cable and that this is what the testbench is reading 
 back and printing to stdout
+
+### Future Work
+
+The C code here has the potential to be fully general to any testbench.
+e.g. as a library.
+
+This would require the following:  
+
+1. An ethernet packet protocol. This would have to defined in
+such a way that it is: generalisable to any bit length of addresses & values,
+can send an arbitrary number of addresses & values in a single packet while
+(in the case that max packet size limit is reached) can define that next packet
+is part of same transfer.
+
+2. Ability to spawn and manage arbitrary number of txn queues for each interface as specified in 
+   the systemverilog testbench (e.g. some designs may have 2 input "interfaces" and a single output interface
+   where the input interfaces are independant of one another, this would require that the c-code maintain
+   two input queues and a single output one, wheras another design may have 1 input and 1 output interface
+   which would require one queue each for input and output)
+
+With the ethernet packet protocol defined, making an RTL design which can parse said protocol
+and map it to the registers of the design under test would be the final step, removing the need
+for spoofing a dut on another computer, and finally having a solution that could co-emulate a real
+design.
